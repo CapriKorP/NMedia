@@ -1,5 +1,5 @@
 # Nmedia
-[![CI](https://github.com/CapriKorP/Nmedia/actions/workflows/build.yml/badge.svg)](https://github.com/CapriKorP/Nmedia/actions/workflows/build.yml)
+[![CI](https://github.com/CapriKorP/Nmedia/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/CapriKorP/Nmedia/actions/workflows/build.yml)
 
 Учебный проект.
 
