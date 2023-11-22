@@ -2,15 +2,14 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log.*
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.Converter
 
-class Post(id: Int, author: String, content: String, published: String, likedByMe: Boolean) {
-    var id,
-    var author,
-    var content,
-    var published,
-    var likedByMe
-}
+
+
+val shareCountStep = 100_000 ///Переменная, задающее количество прибавленных шар
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,18 +24,44 @@ class MainActivity : AppCompatActivity() {
             published = "32 мая в 24:61",
             likedByMe = false
         )
+
         with(binding) {
-            author.text = post.author
-            content.text = post.content
-            published.text = post.published
-            if (likedByMe) {
-                ibLikes?.setImageResource(R.drawable.baseline_favorite_border_24)
+            tvChanel.text = post.author
+            tvDateTime.text = post.published
+            tvPostText.text = post.content
+            tvLikes.text = Converter.converter.converter(post.likes)
+            tvShare.text = Converter.converter.converter(post.share)
+            tvWatching.text = Converter.converter.converter(post.view)
+
+            if (post.likedByMe) {
+                ibLikes?.setImageResource(R.drawable.baseline_favorite_24)
+            }
+
+            ibShare?.setOnClickListener {
+                d("stuff","share")
+                post.share = post.share + shareCountStep
+                tvShare?.text = (Converter.converter.converter(post.share))
+            }
+
+
+            ibLikes?.setOnClickListener {
+                d("stuff","likes")
+                post.likedByMe = !post.likedByMe
+                ibLikes.setImageResource(
+                    if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                )
+                if(post.likedByMe) post.likes++ else post.likes--
+                tvLikes?.text = Converter.converter.converter(post.likes)
+            }
+
+            binding.root?.setOnClickListener{
+                d("stuff", "root")
             }
         }
-
     }
-
-
 }
+
+
+
 
 
