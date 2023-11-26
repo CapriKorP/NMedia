@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 tvShare?.text = (Converter.converter.converter(post.share))
             }
 
-
             ibLikes?.setOnClickListener {
                 d("stuff","likes")
                 post.likedByMe = !post.likedByMe
@@ -54,8 +53,12 @@ class MainActivity : AppCompatActivity() {
                 tvLikes?.text = Converter.converter.converter(post.likes)
             }
 
-            binding.root?.setOnClickListener{
+            root?.setOnClickListener{
                 d("stuff", "root")
+            }
+
+            ivLogo?.setOnClickListener{
+                d("stuff", "avatar")
             }
         }
     }
