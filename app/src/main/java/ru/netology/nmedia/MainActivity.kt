@@ -3,8 +3,8 @@ package ru.netology.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.*
+import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.Converter
 import ru.netology.nmedia.viewmodel.PostViewModel
 
@@ -23,7 +23,11 @@ class MainActivity : AppCompatActivity() {
                 tvChanel.text = post.author
                 tvDateTime.text = post.published
                 tvPostText.text = post.content
-                tvLikes.text = Converter.converter.converter(post.likes)
+                if (post.likes < 0) {
+                    tvLikes.text = "negative"
+                } else {
+                    tvLikes.text = Converter.converter.converter(post.likes)
+                }
                 tvShare.text = Converter.converter.converter(post.share)
                 tvWatching.text = Converter.converter.converter(post.view)
 
@@ -35,15 +39,16 @@ class MainActivity : AppCompatActivity() {
             binding.ibShare?.setOnClickListener {
                 d("stuff", "share")
                 viewModel.share()
+                binding.tvShare.text = Converter.converter.converter(post.share)
             }
 
-            binding.ibLikes?.setOnClickListener {
+            binding.ibLikes.setOnClickListener {
                 d("stuff", "likes")
-                post.likedByMe = !post.likedByMe
-                ibLikes.setImageResource(
+                viewModel.like()
+                binding.ibLikes.setImageResource(
                     if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
                 )
-
+                binding.tvLikes.text = Converter.converter.converter((post.likes))
             }
 
             binding.root?.setOnClickListener{
