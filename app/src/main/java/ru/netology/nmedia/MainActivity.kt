@@ -3,10 +3,10 @@ package ru.netology.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.*
+import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.Converter
-
+import ru.netology.nmedia.viewmodel.PostViewModel
 
 
 val shareCountStep = 100_000 ///Переменная, задающее количество прибавленных шар
@@ -17,47 +17,45 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val post = Post(
-            id = 1,
-            author = "Нетология. Университет интернет-профессий будущего",
-            content = "Это новая Нетология, старую я закрыл",
-            published = "32 мая в 24:61",
-            likedByMe = false
-        )
+        val viewModel: PostViewModel by viewModels()
+        viewModel.data.observe(this) { post ->
+            with(binding) {
+                tvChanel.text = post.author
+                tvDateTime.text = post.published
+                tvPostText.text = post.content
+                if (post.likes < 0) {
+                    tvLikes.text = "Negative"
+                } else {
+                    tvLikes.text = Converter.converter.converter(post.likes)
+                }
+                tvShare.text = Converter.converter.converter(post.share)
+                tvWatching.text = Converter.converter.converter(post.view)
 
-        with(binding) {
-            tvChanel.text = post.author
-            tvDateTime.text = post.published
-            tvPostText.text = post.content
-            tvLikes.text = Converter.converter.converter(post.likes)
-            tvShare.text = Converter.converter.converter(post.share)
-            tvWatching.text = Converter.converter.converter(post.view)
-
-            if (post.likedByMe) {
-                ibLikes?.setImageResource(R.drawable.baseline_favorite_24)
+                if (post.likedByMe) {
+                    ibLikes?.setImageResource(R.drawable.baseline_favorite_24)
+                }
             }
 
-            ibShare?.setOnClickListener {
-                d("stuff","share")
-                post.share = post.share + shareCountStep
-                tvShare?.text = (Converter.converter.converter(post.share))
+            binding.ibShare?.setOnClickListener {
+                d("stuff", "share")
+                viewModel.share()
+                binding.tvShare.text = Converter.converter.converter(post.share)
             }
 
-            ibLikes?.setOnClickListener {
-                d("stuff","likes")
-                post.likedByMe = !post.likedByMe
-                ibLikes.setImageResource(
+            binding.ibLikes.setOnClickListener {
+                d("stuff", "likes")
+                viewModel.like()
+                binding.ibLikes.setImageResource(
                     if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
                 )
-                if(post.likedByMe) post.likes++ else post.likes--
-                tvLikes?.text = Converter.converter.converter(post.likes)
+                binding.tvLikes.text = Converter.converter.converter((post.likes))
             }
 
-            root?.setOnClickListener{
+            binding.root?.setOnClickListener{
                 d("stuff", "root")
             }
 
-            ivLogo?.setOnClickListener{
+            binding.ivLogo?.setOnClickListener {
                 d("stuff", "avatar")
             }
         }

@@ -10,4 +10,3 @@ package ru.netology.nmedia.dto
        var view: Int = 10_000,
        var likedByMe: Boolean
    )
-
