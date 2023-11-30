@@ -5,8 +5,8 @@ package ru.netology.nmedia.dto
        val author: String,
        val content: String,
        val published: String,
-       var likes: Int = 1099,
-       var share: Int = 900_000,
-       var view: Int = 10_000,
-       var likedByMe: Boolean
+       val likes: Int = 100,
+       val share: Int = 30,
+       val view: Int = 100,
+       val likedByMe: Boolean = false
    )
