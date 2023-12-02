@@ -11,21 +11,22 @@ class PostRepositoryInMemoryImpl : PostRepository {
         author = "Нетология. Университет интернет-профессий будущего",
         content = "Познакомитесь с Kotlin — современным языком разработки Android-приложений. Он создан на основе Java, но более прост в работе. Узнаете, как перейти в разработке с Java на Kotlin в одном проекте, о совместимости языков, а также начнёте программировать на Kotlin.",
         published = "32 мая в 24:61",
-        share = 100,
-        view = 1000,
-        likedByMe = false,
-        likes = -1
     )
 
     private val data = MutableLiveData(post)
     override fun get(): LiveData<Post> = data
     override fun like() {
-        post = post.copy(likedByMe = !post.likedByMe)
+        post = post.copy(
+            likedByMe = !post.likedByMe,
+            likes = if (!post.likedByMe) post.likes + 1 else post.likes - 1
+        )
         data.value = post
-        if (post.likedByMe) post.likes++ else post.likes--
     }
 
     override fun share() {
-        post.share = post.share + shareCountStep
+        post = post.copy(
+        share = post.share + shareCountStep
+        )
+        data.value = post
     }
 }

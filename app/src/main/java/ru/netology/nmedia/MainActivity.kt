@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log.*
 import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.dto.Converter
+
 import ru.netology.nmedia.viewmodel.PostViewModel
+import ru.netology.nmedia.dto.Converter.converter
+
 
 
 val shareCountStep = 100_000 ///Переменная, задающее количество прибавленных шар
@@ -24,12 +26,13 @@ class MainActivity : AppCompatActivity() {
                 tvDateTime.text = post.published
                 tvPostText.text = post.content
                 if (post.likes < 0) {
-                    tvLikes.text = "negative"
+
+                    tvLikes.text = "Negative"
                 } else {
-                    tvLikes.text = Converter.converter.converter(post.likes)
+                    tvLikes.text = converter.converter(post.likes)
                 }
-                tvShare.text = Converter.converter.converter(post.share)
-                tvWatching.text = Converter.converter.converter(post.view)
+                tvShare.text = converter.converter(post.share)
+                tvWatching.text = converter.converter(post.view)
 
                 if (post.likedByMe) {
                     ibLikes?.setImageResource(R.drawable.baseline_favorite_24)
@@ -39,7 +42,8 @@ class MainActivity : AppCompatActivity() {
             binding.ibShare?.setOnClickListener {
                 d("stuff", "share")
                 viewModel.share()
-                binding.tvShare.text = Converter.converter.converter(post.share)
+
+                binding.tvShare.text = converter.converter(post.share)
             }
 
             binding.ibLikes.setOnClickListener {
@@ -48,7 +52,9 @@ class MainActivity : AppCompatActivity() {
                 binding.ibLikes.setImageResource(
                     if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
                 )
-                binding.tvLikes.text = Converter.converter.converter((post.likes))
+
+                binding.tvLikes.text = converter.converter((post.likes))
+
             }
 
             binding.root?.setOnClickListener{
@@ -61,8 +67,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-
-
-
-
