@@ -3,7 +3,6 @@ package ru.netology.nmedia.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.shareCountStep
 
 class PostRepositoryInMemoryImpl : PostRepository {
     private var post = Post(
@@ -25,7 +24,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun share() {
         post = post.copy(
-        share = post.share + shareCountStep
+        share = post.share + 1
         )
         data.value = post
     }
