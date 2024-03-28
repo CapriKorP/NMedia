@@ -1,12 +1,13 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.*
 import androidx.activity.viewModels
+import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
-import ru.netology.nmedia.dto.Converter.converter
+import ru.netology.nmedia.dto.ValueConverter.converter
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +34,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            binding.ibShare?.setOnClickListener {
-                d("stuff", "share")
-                viewModel.share()
-                binding.tvShare.text = converter.converter(post.share)
-            }
-
             binding.ibLikes.setOnClickListener {
                 d("stuff", "likes")
                 viewModel.like()
@@ -46,6 +41,12 @@ class MainActivity : AppCompatActivity() {
                     if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
                 )
                 binding.tvLikes.text = converter.converter((post.likes))
+            }
+
+            binding.ibShare?.setOnClickListener {
+                d("stuff", "share")
+                viewModel.share()
+                binding.tvShare.text = converter.converter(post.share)
             }
 
             binding.root?.setOnClickListener{

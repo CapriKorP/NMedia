@@ -1,6 +1,6 @@
 package ru.netology.nmedia.dto
 
-class Converter {
+class ValueConverter {
     object converter {
         fun converter(value: Int): String {
             val convertedValue = when(value) {
