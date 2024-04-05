@@ -16,45 +16,46 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        viewModel.data.observe(this) { post ->
-            with(binding) {
-                tvChanel.text = post.author
-                tvDateTime.text = post.published
-                tvPostText.text = post.content
-                if (post.likes < 0) {
-
-                    tvLikes.text = "Negative"
-                } else {
-                    tvLikes.text = converter.converter(post.likes)
+        viewModel.data.observe(this) { posts ->
+            posts.map { post ->
+                with(binding) {
+                    tvChanel.text = post.author
+                    tvDateTime.text = post.published
+                    tvPostText.text = post.content
+                    if (post.likes < 0) {
+                        tvLikes.text = "Negative"
+                    } else {
+                        tvLikes.text = converter.converter(post.likes)
+                    }
+                    tvShare.text = converter.converter(post.share)
+                    tvWatching.text = converter.converter(post.view)
+                    if (post.likedByMe) {
+                        ibLikes?.setImageResource(R.drawable.baseline_favorite_24)
+                    }
                 }
-                tvShare.text = converter.converter(post.share)
-                tvWatching.text = converter.converter(post.view)
-                if (post.likedByMe) {
-                    ibLikes?.setImageResource(R.drawable.baseline_favorite_24)
+
+                binding.ibLikes.setOnClickListener {
+                    d("stuff", "likes")
+                    viewModel.like()
+                    binding.ibLikes.setImageResource(
+                        if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                    )
+                    binding.tvLikes.text = converter.converter((post.likes))
                 }
-            }
 
-            binding.ibLikes.setOnClickListener {
-                d("stuff", "likes")
-                viewModel.like()
-                binding.ibLikes.setImageResource(
-                    if (post.likedByMe) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
-                )
-                binding.tvLikes.text = converter.converter((post.likes))
-            }
+                binding.ibShare?.setOnClickListener {
+                    d("stuff", "share")
+                    viewModel.share()
+                    binding.tvShare.text = converter.converter(post.share)
+                }
 
-            binding.ibShare?.setOnClickListener {
-                d("stuff", "share")
-                viewModel.share()
-                binding.tvShare.text = converter.converter(post.share)
-            }
+                binding.root?.setOnClickListener {
+                    d("stuff", "root")
+                }
 
-            binding.root?.setOnClickListener{
-                d("stuff", "root")
-            }
-
-            binding.ivLogo?.setOnClickListener {
-                d("stuff", "avatar")
+                binding.ivLogo?.setOnClickListener {
+                    d("stuff", "avatar")
+                }
             }
         }
     }
