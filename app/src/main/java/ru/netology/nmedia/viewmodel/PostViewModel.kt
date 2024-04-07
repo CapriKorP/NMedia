@@ -10,3 +10,4 @@ class PostViewModel : ViewModel() {
     fun like(id:Long) = repository.like(id)
     fun share(id:Long) = repository.share(id)
 }
+
