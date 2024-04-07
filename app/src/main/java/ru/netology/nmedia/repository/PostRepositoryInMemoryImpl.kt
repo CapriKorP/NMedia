@@ -65,11 +65,16 @@ class PostRepositoryInMemoryImpl : PostRepository {
     private val data = MutableLiveData(posts)
     override fun getAll(): MutableLiveData<List<Post>> = data
     override fun like(id:Long) {
-        posts = posts.map(
-            if (it.id != id) it else it.copy(liked = !it.liked)
-        )
+        posts = posts.map {
+            if (it.id != id) it else it.copy(likedByMe = !it.likedByMe)
+        }
+        data.value = posts
     }
+
     override fun share(id: Long) {
-        TODO("Not yet implemented")
+        posts = posts.map{
+            if (it.id != id) it else it.copy(shared = it.shared + 1)
+        }
+        data.value = posts
     }
 }
