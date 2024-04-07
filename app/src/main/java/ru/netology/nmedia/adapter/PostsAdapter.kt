@@ -48,7 +48,7 @@ class PostViewHolder(
             }
             tvShare.text = ValueConverter.converter.converter(post.shared)
             tvWatching.text = ValueConverter.converter.converter(post.viewed)
-            if (post.likedByMe) ibLikes?.setImageResource(R.drawable.baseline_favorite_24) else ibLikes?.setImageResource(
+            if (post.likedByMe) ibLikes.setImageResource(R.drawable.baseline_favorite_24) else ibLikes.setImageResource(
                 R.drawable.baseline_favorite_border_24
             )
 
