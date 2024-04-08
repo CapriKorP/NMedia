@@ -7,4 +7,7 @@
     <string name="likes">10</string>
     <string name="share">7</string>
     <string name="watch">35</string>
+    <string name="menu_remove">Remove</string>
+    <string name="menu_edit">Edit</string>
+    <string name="post_text">Post text</string>
 </resources>
