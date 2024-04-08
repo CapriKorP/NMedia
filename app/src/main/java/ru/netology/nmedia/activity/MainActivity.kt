@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
+import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             binding.save.setOnClickListener {
                 val context = binding.content.text.toString()
                 if (context.isBlank()) {
-                    Toast.makeText(this, "Fuck fuck fuck", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.empty_сontent, Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
