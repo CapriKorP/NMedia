@@ -1,9 +1,14 @@
 package ru.netology.nmedia.activity
 
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.Group
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -15,6 +20,7 @@ import ru.netology.nmedia.util.focusAndShowKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -39,6 +45,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        fun close() {
+            binding.content.setText("")
+            binding.content.clearFocus()
+            binding.group.visibility = View.GONE
+            AndroidUtils.hideKeyboard(binding.content)
+        }
+
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
             val newPost = posts.size > adapter.currentList.size
@@ -52,9 +65,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.edited.observe(this) {
             if (it.id != 0L) {
                 binding.content.setText(it.content)
+                binding.group.visibility = View.VISIBLE
+                binding.postTextEdit.setText(it.content)
                 binding.content.focusAndShowKeyboard()
-
             }
+
             binding.save.setOnClickListener {
                 val context = binding.content.text.toString()
                 if (context.isBlank()) {
@@ -64,10 +79,11 @@ class MainActivity : AppCompatActivity() {
 
                 viewModel.changeContent(context)
                 viewModel.save()
+                close()
+            }
 
-                binding.content.setText("")
-                binding.content.clearFocus()
-                AndroidUtils.hideKeyboard(binding.content)
+            binding.cancelEdit.setOnClickListener {
+                close()
             }
         }
     }

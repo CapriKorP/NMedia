@@ -135,7 +135,6 @@ class PostRepositoryInMemoryImpl : PostRepository {
         } else {
             posts.map { if (it.id == post.id) it.copy(content = post.content) else it }
         }
-
         data.value = posts
     }
 }

@@ -1,6 +1,5 @@
 package ru.netology.nmedia.adapter
 
-import android.nfc.NfcAdapter.OnTagRemovedListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu

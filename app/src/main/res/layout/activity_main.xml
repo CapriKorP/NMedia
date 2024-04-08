@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="64dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="pen_icon,username_edit,post_text_edit,cancel_edit" />
 
 
@@ -36,7 +36,7 @@
         android:id="@+id/pen_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="8dp"
         android:src="@drawable/pen"
         app:layout_constraintTop_toBottomOf="@id/list"
         app:layout_constraintBottom_toTopOf="@id/content"/>
@@ -48,6 +48,10 @@
         app:layout_constraintStart_toEndOf="@id/pen_icon"
         app:layout_constraintEnd_toStartOf="@id/cancel_edit"
         app:layout_constraintTop_toBottomOf="@id/list"
+        android:text="@string/edit_mode"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="bold"
+        android:textSize="16dp"
         />
 
     <TextView
@@ -57,16 +61,21 @@
         app:layout_constraintStart_toEndOf="@id/pen_icon"
         app:layout_constraintEnd_toStartOf="@id/cancel_edit"
         app:layout_constraintTop_toBottomOf="@id/username_edit"
-        app:layout_constraintBottom_toTopOf="@id/content"/>
+        app:layout_constraintBottom_toTopOf="@id/content"
+        android:text="Аллоха - волапфывпрдфыврпдоыфврпдлоыфрвдплорвылфопр ывпывпывар"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="16dp"/>
 
     <ImageButton
         android:id="@+id/cancel_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/edit_cancel"
-        app:layout_constraintTop_toBottomOf="@id/list"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="@id/username_edit"
+        app:layout_constraintBottom_toBottomOf="@id/post_text_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/save"
         android:background="@android:color/transparent"/>
 
     <EditText
@@ -102,8 +111,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/baseline_save_post"
-        android:padding="16dp"
+        app:srcCompat="@drawable/send"
+        android:padding="8dp"
         android:outlineSpotShadowColor="@color/black"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
