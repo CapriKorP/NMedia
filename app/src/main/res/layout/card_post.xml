@@ -25,7 +25,7 @@
         android:textStyle="bold"
         android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@id/tvDateTime"
-        app:layout_constraintEnd_toStartOf="@id/contextMenu"
+        app:layout_constraintEnd_toStartOf="@id/popupMenu"
         app:layout_constraintStart_toEndOf="@id/ivLogo"
         app:layout_constraintTop_toTopOf="@id/ivLogo" />
 
@@ -37,12 +37,12 @@
         android:textColor="@android:color/darker_gray"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@id/ivLogo"
-        app:layout_constraintEnd_toStartOf="@id/contextMenu"
+        app:layout_constraintEnd_toStartOf="@id/popupMenu"
         app:layout_constraintStart_toEndOf="@id/ivLogo"
         app:layout_constraintTop_toBottomOf="@id/tvChanel" />
 
     <ImageButton
-        android:id="@+id/contextMenu"
+        android:id="@+id/popupMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"

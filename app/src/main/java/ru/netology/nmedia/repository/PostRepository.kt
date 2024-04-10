@@ -7,4 +7,6 @@ interface PostRepository {
     fun getAll(): MutableLiveData<List<Post>>
     fun like(id:Long)
     fun share(id: Long)
+    fun removeByID(id: Long)
+    fun save(post: Post)
 }
