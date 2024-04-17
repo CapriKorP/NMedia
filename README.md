@@ -4,8 +4,10 @@
 Учебный проект.
 
 Ход выполнения:
+*
+* 17.04.2023 - Material Design 3
 * 11.04.2024 - CRUD
-* 08.03.2024 - RycyclerView + DiffUtil
+* 08.04.2024 - RycyclerView + DiffUtil
 * 30.11.2023 - MVVM
 * 27.11.2023 - Добавлены Listener
 * 10.11.2023 - Добавление элементов(ConstraintLayout)
