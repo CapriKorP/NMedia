@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:textColor">#777777</item>
+        <item name="android:textSize">16dp</item>
+        <item name="iconSize">20dp</item>
+        <item name="iconTint">#777777</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="iconGravity">start</item>
+    </style>
+
+    <style name="LikeButtonStyle" parent="ButtonStyle">
+        <item name="iconTint">@color/color_like_button</item>
+    </style>
+
+</resources>
