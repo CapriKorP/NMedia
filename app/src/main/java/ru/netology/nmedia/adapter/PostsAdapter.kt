@@ -1,5 +1,6 @@
 package ru.netology.nmedia.adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -45,6 +46,7 @@ class PostViewHolder(
             bLikes.text = if (post.likes < 0) "Negative" else converter(post.likes)
             bShare.text = converter(post.shared)
             bWatching.text = converter(post.viewed)
+
             bLikes.isChecked = post.likedByMe
 
             bLikes.setOnClickListener {
@@ -88,6 +90,7 @@ fun converter(value: Int): String = when (value) {
     in 1000..1099 -> "${(value / 1000)}K"
     in 1100..9999 -> "${String.format("%.1f", value.toDouble() / 1000)}K"
     in 10000..999999 -> "${(value / 1000)}K"
+    in -10..-1 -> converter(value)
     else ->
         if (value > 0) "${String.format("%.1f", value.toDouble() / 1_000_000)}М" else "Negative"
 }
