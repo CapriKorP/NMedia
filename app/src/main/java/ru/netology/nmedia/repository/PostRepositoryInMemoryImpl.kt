@@ -3,6 +3,8 @@ package ru.netology.nmedia.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
+import java.util.Calendar
+import java.util.Date
 
 class PostRepositoryInMemoryImpl : PostRepository {
     private var nextId = 1L
@@ -129,7 +131,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 post.copy(
                     id = nextId++,
                     author = "Me",
-                    published = "Now"
+                    published = Calendar.getInstance().time.toString()
                 )
             ) + posts
         } else {

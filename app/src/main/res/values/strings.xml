@@ -12,4 +12,5 @@
     <string name="post_text">Post text</string>
     <string name="empty_сontent">Not be empty</string>
     <string name="edit_mode">Edit</string>
+    <string name="text_input_title">Create new post</string>
 </resources>
