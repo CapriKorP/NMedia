@@ -26,6 +26,9 @@ class NewPostActivity : AppCompatActivity() {
         binding.back.setOnClickListener{
             finish()
         }
+
+
+        binding.content.setText.toString(Intent().apply {putExtra(Intent.EXTRA_TEXT)})
     }
 }
 

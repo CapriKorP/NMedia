@@ -1,5 +1,6 @@
 package ru.netology.nmedia.activity
 
+import android.app.LauncherActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         val editPostActivity = registerForActivityResult(EditPostContract) {
             val edited = it ?: return@registerForActivityResult
+
+
         }
 
         val adapter = PostsAdapter(object : OnInteractionListener {
@@ -55,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                newPostLauncher.launch()
+                editPostActivity.launch(post.content)
                 viewModel.edit(post)
             }
         })
@@ -70,13 +73,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.edited.observe(this) {post->
+            if (post.id == 0L) {
+                return@observe
+            }
+            editPostActivity.launch()
+
         binding.createPostFab.setOnClickListener {
             newPostLauncher.launch()
         }
     }
 }
 
-object EditPostContract: ActivityResultContract<Unit, String?>(){
-    override fun createIntent(context: Context, input: Unit) = Intent(context,NewPostActivity::class.java)
+object EditPostContract: ActivityResultContract<String, String?>(){
+    override fun createIntent(context: Context, input: String) = Intent(context,NewPostActivity::class.java)
     override fun parseResult(resultCode: Int, intent: Intent?) = intent?.getStringExtra(Intent.EXTRA_TEXT)
 }
