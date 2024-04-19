@@ -14,7 +14,8 @@ private val empty = Post(
     likes = 0,
     shared =0,
     viewed = 0,
-    likedByMe = false
+    likedByMe = false,
+    videoURL = ""
 )
 
 class PostViewModel : ViewModel() {

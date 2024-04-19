@@ -17,7 +17,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 10,
             shared = 2,
             viewed = 123,
-            likedByMe = true
+            likedByMe = true,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -27,7 +28,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 8,
             shared = 15,
             viewed = 100,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -37,7 +39,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = -10000,
             shared = 165234,
             viewed = 1500,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -47,7 +50,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 1042360,
             shared = 15345,
             viewed = 15657300,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -57,7 +61,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 107630,
             shared = 165745,
             viewed = 150457680,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -67,7 +72,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 100654,
             shared = 1525,
             viewed = 1506450,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -77,7 +83,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 10045645,
             shared = 154732,
             viewed = 15008567,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -87,7 +94,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 100352,
             shared = 1554376,
             viewed = 15005477,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         ),
         Post(
             id = nextId++,
@@ -97,7 +105,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 9847100,
             shared = 165653,
             viewed = 1456500,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = ""
         )
     )
 
