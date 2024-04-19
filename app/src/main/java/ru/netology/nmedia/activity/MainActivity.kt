@@ -31,12 +31,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.save()
         }
 
-        val editPostActivity = registerForActivityResult(EditPostContract) {
-            val edited = it ?: return@registerForActivityResult
-
-
-        }
-
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.like(post.id)
@@ -58,8 +52,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                editPostActivity.launch(post.content)
                 viewModel.edit(post)
+                newPostLauncher.launch(post.content)
             }
         })
 
@@ -73,19 +67,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.edited.observe(this) {post->
-            if (post.id == 0L) {
-                return@observe
+            binding.createPostFab.setOnClickListener {
+                newPostLauncher.launch("")
             }
-            editPostActivity.launch()
-
-        binding.createPostFab.setOnClickListener {
-            newPostLauncher.launch()
         }
     }
-}
-
-object EditPostContract: ActivityResultContract<String, String?>(){
-    override fun createIntent(context: Context, input: String) = Intent(context,NewPostActivity::class.java)
-    override fun parseResult(resultCode: Int, intent: Intent?) = intent?.getStringExtra(Intent.EXTRA_TEXT)
-}

@@ -1,7 +1,9 @@
 package ru.netology.nmedia.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.*
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
@@ -14,25 +16,32 @@ class NewPostActivity : AppCompatActivity() {
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.content.requestFocus()
+        binding.content.setText(intent?.getStringExtra(Intent.EXTRA_TEXT))
         binding.saveEditedPost.setOnClickListener {
             val text = binding.content.text.toString()
             if (text.isBlank()) {
                 setResult(RESULT_CANCELED)
             } else {
-                setResult(RESULT_OK, Intent().apply { putExtra(Intent.EXTRA_TEXT, text) })
+                setResult(RESULT_OK, Intent().apply { putExtra(EXTRA_TEXT, text) })
             }
             finish()
         }
+
         binding.back.setOnClickListener{
             finish()
         }
-
-
-        binding.content.setText.toString(Intent().apply {putExtra(Intent.EXTRA_TEXT)})
     }
 }
 
-object NewPostContract: ActivityResultContract<Unit,String?>(){
-    override fun createIntent(context: Context, input: Unit) = Intent(context,NewPostActivity::class.java)
-    override fun parseResult(resultCode: Int, intent: Intent?) = intent?.getStringExtra(Intent.EXTRA_TEXT)
+object NewPostContract: ActivityResultContract<String?,String?>(){
+    override fun createIntent(context: Context, input: String?) = Intent(context,NewPostActivity::class.java).putExtra(Intent.EXTRA_TEXT, input)
+
+    override fun parseResult(resultCode: Int, intent: Intent?): String? =
+        if(resultCode == Activity.RESULT_OK) {
+            intent?.getStringExtra(Intent.EXTRA_TEXT)
+        } else {
+            null
+        }
+
 }
