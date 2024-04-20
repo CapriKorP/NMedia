@@ -8,7 +8,8 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.netology.nmedia.R
+import ru.netology.nmedia.R.string.text_input_title_edit
 import ru.netology.nmedia.databinding.ActivityNewPostBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
 
@@ -21,8 +22,17 @@ class NewPostActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
+        var titleText:String = ""
         binding.content.requestFocus()
-        binding.content.setText(intent?.getStringExtra(Intent.EXTRA_TEXT))
+        val incomingText = intent?.getStringExtra(Intent.EXTRA_TEXT)
+        if(incomingText.isNullOrBlank()) {
+            titleText = R.string.text_input_title.toString()
+        } else {
+            titleText = R.string.text_input_title_edit.toString()
+        }
+
+        binding.title.text = titleText
+        binding.content.setText(incomingText)
         binding.saveEditedPost.setOnClickListener {
             val text = binding.content.text.toString()
             if (text.isBlank()) {
