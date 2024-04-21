@@ -29,7 +29,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun share(id: Long) = repository.share(id)
     fun removeByID(id: Long) = repository.removeByID(id)
     fun playMedia(id: Long) = repository.playMedia(id)
-    fun openPost(id: Long) = repository.playMedia(id)
 
     fun save() {
         edited.value?.let {

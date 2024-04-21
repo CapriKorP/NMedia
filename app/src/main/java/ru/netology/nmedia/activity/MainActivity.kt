@@ -63,10 +63,12 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 viewModel.playMedia(post.id)
+                viewModel.cancelEdit()
             }
 
             override fun openPost(post: Post) {
                 viewModel.playMedia(post.id)
+                viewModel.cancelEdit()
             }
         })
 
