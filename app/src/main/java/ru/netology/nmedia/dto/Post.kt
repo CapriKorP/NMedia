@@ -8,5 +8,7 @@ package ru.netology.nmedia.dto
        val likes: Int,
        val shared: Int,
        val viewed: Int,
-       val likedByMe: Boolean
+       val likedByMe: Boolean,
+       val videoURL: String,
+       val videoViewed: Int
    )

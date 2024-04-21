@@ -13,4 +13,6 @@
     <string name="post_text">Введите текст поста</string>
     <string name="empty_сontent">Поле не может быть пустым</string>
     <string name="edit_mode">Редактирование</string>
+    <string name="text_input_title">Новый пост</string>
+    <string name="text_input_title_edit">Редактирование поста</string>
 </resources>

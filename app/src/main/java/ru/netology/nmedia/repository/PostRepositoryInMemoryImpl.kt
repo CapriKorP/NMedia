@@ -3,6 +3,8 @@ package ru.netology.nmedia.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
+import java.util.Calendar
+import java.util.Date
 
 class PostRepositoryInMemoryImpl : PostRepository {
     private var nextId = 1L
@@ -15,27 +17,33 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 10,
             shared = 2,
             viewed = 123,
-            likedByMe = true
+            likedByMe = true,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
-            author = "Нетология. Университет интернет-профессий будущего",
-            content = "Swift: язык программирования для платформы Apple, созданный в первую очередь для разработки приложений для iOS, macOS, watchOS и tvOS.",
+            author = "United Systems Administrators",
+            content = "Рабочий день системного администратора",
             published = "2 мая в 15:06",
             likes = 8,
             shared = 15,
             viewed = 100,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "https://www.youtube.com/watch?v=2uc4EBrt9l8",
+            videoViewed = 15
         ),
         Post(
             id = nextId++,
             author = "Нетология. Университет интернет-профессий будущего",
             content = "C++: мощный и универсальный язык программирования. Он славится своей производительностью и позволяет создавать быстрые и эффективные приложения.",
             published = "3 мая в 15:06",
-            likes = -10000,
+            likes = -1,
             shared = 165234,
             viewed = 1500,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
@@ -45,7 +53,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 1042360,
             shared = 15345,
             viewed = 15657300,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
@@ -55,7 +65,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 107630,
             shared = 165745,
             viewed = 150457680,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
@@ -65,7 +77,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 100654,
             shared = 1525,
             viewed = 1506450,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
@@ -75,7 +89,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 10045645,
             shared = 154732,
             viewed = 15008567,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
@@ -85,7 +101,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 100352,
             shared = 1554376,
             viewed = 15005477,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         ),
         Post(
             id = nextId++,
@@ -95,7 +113,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 9847100,
             shared = 165653,
             viewed = 1456500,
-            likedByMe = false
+            likedByMe = false,
+            videoURL = "",
+            videoViewed = 0
         )
     )
 
@@ -129,12 +149,16 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 post.copy(
                     id = nextId++,
                     author = "Me",
-                    published = "Now"
+                    published = Calendar.getInstance().time.toString()
                 )
             ) + posts
         } else {
             posts.map { if (it.id == post.id) it.copy(content = post.content) else it }
         }
         data.value = posts
+    }
+
+    override fun playMedia(post: Post) {
+        TODO("Not yet implemented")
     }
 }

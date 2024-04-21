@@ -2,6 +2,7 @@ package ru.netology.nmedia.adapter
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +17,7 @@ interface OnInteractionListener {
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
     fun onEdit(post: Post) {}
+    fun playMedia(post: Post) {}
 }
 
 class PostsAdapter(
@@ -47,6 +49,13 @@ class PostViewHolder(
             bShare.text = converter(post.shared)
             bWatching.text = converter(post.viewed)
 
+            if (post.videoURL != "") {
+                group.visibility = View.VISIBLE
+                tvContent.visibility = View.GONE
+                tvTitle.text = post.content
+                tvWatch.text = post.videoViewed.toString() + " просмотров"
+            }
+
             bLikes.isChecked = post.likedByMe
 
             bLikes.setOnClickListener {
@@ -75,6 +84,14 @@ class PostViewHolder(
                         }
                     }
                 }.show()
+            }
+
+            binding.bPlay.setOnClickListener() {
+                onInteractionListener.playMedia(post)
+            }
+
+            binding.ivPlay.setOnClickListener() {
+                onInteractionListener.playMedia(post)
             }
         }
     }

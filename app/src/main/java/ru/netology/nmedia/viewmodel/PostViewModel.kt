@@ -12,9 +12,11 @@ private val empty = Post(
     content = "",
     published = "",
     likes = 0,
-    shared =0,
+    shared = 0,
     viewed = 0,
-    likedByMe = false
+    likedByMe = false,
+    videoURL = "",
+    videoViewed = 0
 )
 
 class PostViewModel : ViewModel() {
@@ -48,4 +50,3 @@ class PostViewModel : ViewModel() {
         edited.value = empty
     }
 }
-
