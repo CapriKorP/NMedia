@@ -9,5 +9,6 @@ package ru.netology.nmedia.dto
        val shared: Int,
        val viewed: Int,
        val likedByMe: Boolean,
-       val videoURL: String
+       val videoURL: String,
+       val videoViewed: Int
    )

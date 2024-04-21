@@ -1,12 +1,9 @@
 package ru.netology.nmedia.activity
 
-import android.app.LauncherActivity
-import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.R
@@ -59,6 +56,14 @@ class MainActivity : AppCompatActivity() {
                 viewModel.edit(post)
                 newPostLauncher.launch(post.content)
             }
+
+            override fun playMedia(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            }
+
         })
 
         binding.list.adapter = adapter
@@ -71,9 +76,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-            binding.createPostFab.setOnClickListener {
-                viewModel.cancelEdit()
-                newPostLauncher.launch("")
-            }
+        binding.createPostFab.setOnClickListener {
+            viewModel.cancelEdit()
+            newPostLauncher.launch("")
         }
     }
+}
