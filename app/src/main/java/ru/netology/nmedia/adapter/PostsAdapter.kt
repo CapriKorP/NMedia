@@ -18,6 +18,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onEdit(post: Post) {}
     fun playMedia(post: Post) {}
+    fun openPost(post: Post)
 }
 
 class PostsAdapter(
@@ -92,6 +93,10 @@ class PostViewHolder(
 
             binding.ivPlay.setOnClickListener() {
                 onInteractionListener.playMedia(post)
+            }
+
+            binding.tvContent.setOnClickListener{
+                onInteractionListener.openPost(post)
             }
         }
     }
