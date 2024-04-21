@@ -27,8 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         val newPostLauncher = registerForActivityResult(NewPostContract) {
             val result = it ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
+            if (result.isNullOrEmpty()) {
+                viewModel.cancelEdit()
+            } else {
+                viewModel.changeContent(result)
+                viewModel.save()
+            }
         }
 
         val adapter = PostsAdapter(object : OnInteractionListener {
@@ -68,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         }
 
             binding.createPostFab.setOnClickListener {
+                viewModel.cancelEdit()
                 newPostLauncher.launch("")
             }
         }
