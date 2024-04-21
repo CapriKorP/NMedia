@@ -199,7 +199,7 @@ class PostRepositoryFileImpl(
 
     override fun playMedia(id: Long) {
         posts = posts.map {
-            if (it.id != id) it else it.copy(viewed = it.viewed + 1)
+            if (it.id != id) it else it.copy(videoViewed = it.videoViewed + 1)
         }
         data.value = posts
         sync()

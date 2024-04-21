@@ -58,11 +58,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun playMedia(post: Post) {
-                viewModel.playMedia(post.id)
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
                 }
+                viewModel.playMedia(post.id)
             }
 
             override fun openPost(post: Post) {
