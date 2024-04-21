@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
                 }
-                viewModel.playMedia(post.id)
+                //viewModel.playMedia(post.id)
                 viewModel.cancelEdit()
             }
 
