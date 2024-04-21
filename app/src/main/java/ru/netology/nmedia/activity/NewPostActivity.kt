@@ -23,9 +23,17 @@ class NewPostActivity : AppCompatActivity() {
         val viewModel: PostViewModel by viewModels()
 
         binding.content.requestFocus()
+
         val incomingText = intent?.getStringExtra(Intent.EXTRA_TEXT)
-        binding.title.text = if (incomingText.isNullOrBlank()) getResources().getString(R.string.text_input_title) else getResources().getString(R.string.text_input_title_edit)
-        binding.content.setText(incomingText)
+        if(incomingText.isNullOrBlank()) {
+            binding.title.text = getResources().getString(R.string.text_input_title)
+            binding.saveEditedPost.setImageResource(R.drawable.send)
+        } else {
+            binding.title.text = getResources().getString(R.string.text_input_title_edit)
+            binding.saveEditedPost.setImageResource(R.drawable.bx_save)
+            binding.content.setText(incomingText)
+        }
+
         binding.saveEditedPost.setOnClickListener {
             val text = binding.content.text.toString()
             if (text.isBlank()) {
