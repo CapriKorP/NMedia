@@ -1,14 +1,28 @@
 package ru.netology.nmedia.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.dto.Post
 import java.util.Calendar
 import java.util.Date
 
-class PostRepositoryInMemoryImpl : PostRepository {
+class PostRepositoryFileImpl(
+    private val context: Context
+) : PostRepository {
+    companion object {
+        private const val key = "posts"
+    }
+
+    private val gson = Gson()
+    private val prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+    private val typetoken = TypeToken.getParameterized(List::class.java, Post::class.java).type
+    private val filename = "posts.json"
     private var nextId = 1L
-    private var posts = listOf(
+    private var posts = emptyList<Post>()
+    private var defaultPosts = listOf(
         Post(
             id = nextId++,
             author = "Нетология. Университет интернет-профессий будущего",
@@ -120,6 +134,27 @@ class PostRepositoryInMemoryImpl : PostRepository {
     )
 
     private val data = MutableLiveData(posts)
+
+    init {
+        val file = context.filesDir.resolve(filename)
+        if (file.exists()) {
+            context.openFileInput(filename).bufferedReader().use {
+                posts = gson.fromJson(it, typetoken)
+                nextId = posts.maxOf { it.id } + 1
+            }
+        } else {
+            posts = defaultPosts
+            sync()
+        }
+        data.value = posts
+    }
+
+    private fun sync() {
+        context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
+            it.write(gson.toJson(posts))
+        }
+    }
+
     override fun getAll(): MutableLiveData<List<Post>> = data
     override fun like(id: Long) {
         posts = posts.map {
@@ -129,6 +164,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             )
         }
         data.value = posts
+        sync()
     }
 
     override fun share(id: Long) {
@@ -136,11 +172,13 @@ class PostRepositoryInMemoryImpl : PostRepository {
             if (it.id != id) it else it.copy(shared = it.shared + 1)
         }
         data.value = posts
+        sync()
     }
 
     override fun removeByID(id: Long) {
         posts = posts.filter { it.id != id }
         data.value = posts
+        sync()
     }
 
     override fun save(post: Post) {
@@ -156,12 +194,14 @@ class PostRepositoryInMemoryImpl : PostRepository {
             posts.map { if (it.id == post.id) it.copy(content = post.content) else it }
         }
         data.value = posts
+        sync()
     }
 
     override fun playMedia(id: Long) {
         posts = posts.map {
-            if (it.id != id) it else  it.copy(viewed = it.viewed + 1)
+            if (it.id != id) it else it.copy(videoViewed = it.videoViewed + 1)
         }
         data.value = posts
+        sync()
     }
 }

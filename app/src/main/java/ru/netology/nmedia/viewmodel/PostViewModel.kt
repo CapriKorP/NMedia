@@ -1,10 +1,12 @@
 package ru.netology.nmedia.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
+import ru.netology.nmedia.repository.PostRepositoryFileImpl
+import ru.netology.nmedia.repository.PostRepositorySharedPreferenceImpl
 
 private val empty = Post(
     id = 0,
@@ -19,16 +21,17 @@ private val empty = Post(
     videoViewed = 0
 )
 
-class PostViewModel : ViewModel() {
-    private val repository: PostRepository = PostRepositoryInMemoryImpl()
+class PostViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: PostRepository = PostRepositoryFileImpl(application)
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
-    fun like(id:Long) = repository.like(id)
-    fun share(id:Long) = repository.share(id)
+    fun like(id: Long) = repository.like(id)
+    fun share(id: Long) = repository.share(id)
     fun removeByID(id: Long) = repository.removeByID(id)
+    fun playMedia(id: Long) = repository.playMedia(id)
 
     fun save() {
-        edited.value?.let{
+        edited.value?.let {
             repository.save(it)
         }
         edited.value = empty
@@ -38,9 +41,9 @@ class PostViewModel : ViewModel() {
         edited.value = post
     }
 
-    fun changeContent (text:String) {
-        edited.value?.let{
-            if(it.content != text.trim()) {
+    fun changeContent(text: String) {
+        edited.value?.let {
+            if (it.content != text.trim()) {
                 edited.value = it.copy(content = text)
             }
         }

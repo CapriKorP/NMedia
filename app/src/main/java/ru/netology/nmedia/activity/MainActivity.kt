@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
-        val newPostLauncher = registerForActivityResult(NewPostContract) {
-            val result = it ?: return@registerForActivityResult
+        val newPostLauncher = registerForActivityResult(NewPostContract) {result ->
             if (result.isNullOrEmpty()) {
                 viewModel.cancelEdit()
+                return@registerForActivityResult
             } else {
                 viewModel.changeContent(result)
                 viewModel.save()
@@ -64,8 +64,14 @@ class MainActivity : AppCompatActivity() {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
                 }
+                viewModel.playMedia(post.id)
+                viewModel.cancelEdit()
             }
 
+            override fun openPost(post: Post) {
+                viewModel.playMedia(post.id)
+                viewModel.cancelEdit()
+            }
         })
 
         binding.list.adapter = adapter
