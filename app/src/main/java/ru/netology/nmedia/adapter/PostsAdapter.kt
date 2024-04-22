@@ -54,6 +54,9 @@ class PostViewHolder(
                 tvContent.visibility = View.GONE
                 tvTitle.text = post.content
                 tvWatch.text = post.videoViewed.toString() + " просмотров"
+            } else {
+                group.visibility = View.GONE
+                tvContent.visibility = View.VISIBLE
             }
 
             bLikes.isChecked = post.likedByMe

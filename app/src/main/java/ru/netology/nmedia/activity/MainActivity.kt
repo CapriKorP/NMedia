@@ -24,12 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         val newPostLauncher = registerForActivityResult(NewPostContract) {
             val result = it ?: return@registerForActivityResult
-            if (result.isNullOrEmpty()) {
-                viewModel.cancelEdit()
-            } else {
                 viewModel.changeContent(result)
                 viewModel.save()
-            }
         }
 
         val adapter = PostsAdapter(object : OnInteractionListener {
