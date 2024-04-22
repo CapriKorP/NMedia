@@ -1,5 +1,6 @@
 package ru.netology.nmedia.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +16,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -24,8 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         val newPostLauncher = registerForActivityResult(NewPostContract) {
             val result = it ?: return@registerForActivityResult
+            if (result.isNullOrEmpty()) {
+                viewModel.cancelEdit()
+            } else {
                 viewModel.changeContent(result)
                 viewModel.save()
+            }
         }
 
         val adapter = PostsAdapter(object : OnInteractionListener {
