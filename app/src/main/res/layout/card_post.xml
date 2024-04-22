@@ -11,7 +11,6 @@
         style="@style/LikeButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
         app:constraint_referenced_ids="ivLogo,tvAuthor,tvPublished,popupMenu"
         app:layout_constraintTop_toBottomOf="@id/tvContent"
         />
@@ -82,7 +81,6 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:constraint_referenced_ids="bPlay,ivPlay,tvTitle,tvWatch"
         app:layout_constraintTop_toBottomOf="@id/tvContent"
         app:layout_constraintBottom_toTopOf="@id/barrier2"
@@ -150,7 +148,6 @@
         style="@style/LikeButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
         app:constraint_referenced_ids="toggleButton,bShare, bWatching"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
         />
