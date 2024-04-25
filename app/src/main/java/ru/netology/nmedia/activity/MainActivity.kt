@@ -1,6 +1,5 @@
 package ru.netology.nmedia.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
-        val newPostLauncher = registerForActivityResult(NewPostContract) {result ->
+        val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
             if (result.isNullOrEmpty()) {
                 viewModel.cancelEdit()
                 return@registerForActivityResult
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             override fun onShare(post: Post) {
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    putExtra(Intent.EXTRA_TEXT, post.content) 
                     type = "text/plain"
                 }
                 val shareIntent = Intent.createChooser(intent, getString(R.string.share))
