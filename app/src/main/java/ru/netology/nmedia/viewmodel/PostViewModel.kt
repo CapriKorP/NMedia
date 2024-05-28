@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryFileImpl
-import ru.netology.nmedia.repository.PostRepositorySharedPreferenceImpl
 
 private val empty = Post(
     id = 0,
@@ -30,7 +29,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun removeByID(id: Long) = repository.removeByID(id)
     fun playMedia(id: Long) = repository.playMedia(id)
 
-    fun save() {
+    fun save(toString: String) {
         edited.value?.let {
             repository.save(it)
         }
