@@ -1,6 +1,5 @@
 package ru.netology.nmedia.adapter
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
+import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.databinding.FragmentCardPostBinding
 import ru.netology.nmedia.dto.Post
 
@@ -18,7 +18,8 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onEdit(post: Post) {}
     fun playMedia(post: Post) {}
-    fun openPost(post: Post) {}
+    fun onOpenCardPost(post: Post)
+    fun onPlayMedia(post: Post)
 }
 
 class PostsAdapter(
@@ -27,7 +28,7 @@ class PostsAdapter(
     ListAdapter<Post, PostViewHolder>(PostDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding = FragmentCardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding, onInteractionListener)
     }
 
@@ -37,7 +38,7 @@ class PostsAdapter(
 }
 
 class PostViewHolder(
-    private val binding: FragmentCardPostBinding,
+    private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener
 
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -91,15 +92,15 @@ class PostViewHolder(
             }
 
             binding.bPlay.setOnClickListener() {
-                onInteractionListener.playMedia(post)
+                onInteractionListener.onPlayMedia(post)
             }
 
             binding.ivPlay.setOnClickListener() {
-                onInteractionListener.playMedia(post)
+                onInteractionListener.onPlayMedia(post)
             }
 
             binding.tvContent.setOnClickListener{
-                onInteractionListener.openPost(post)
+                onInteractionListener.onOpenCardPost(post)
             }
         }
     }

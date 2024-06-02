@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp">
+    android:padding="12dp"
+    android:scrollbars="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        tools:ignore="MissingConstraints">
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/head_group"
@@ -12,8 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="ivLogo,tvAuthor,tvPublished,popupMenu"
-        app:layout_constraintTop_toBottomOf="@id/tvContent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/tvContent" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -58,8 +65,7 @@
         app:iconGravity="end"
         app:layout_constraintBottom_toBottomOf="@id/tvPublished"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvAuthor"
-        />
+        app:layout_constraintTop_toTopOf="@id/tvAuthor" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -82,8 +88,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="bPlay,ivPlay,tvTitle,tvWatch"
-        app:layout_constraintTop_toBottomOf="@id/tvContent"
         app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
 
         />
 
@@ -91,10 +97,9 @@
         android:id="@+id/ivPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img"
         android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
-        />
+        android:src="@drawable/img"
+        app:layout_constraintTop_toBottomOf="@id/barrier" />
 
     <Button
         android:id="@+id/bPlay"
@@ -117,10 +122,10 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ivPlay"
-        app:layout_constraintStart_toStartOf="@id/ivPlay"
         android:textSize="16dp"
         android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/ivPlay"
+        app:layout_constraintTop_toBottomOf="@id/ivPlay"
 
         />
 
@@ -128,13 +133,12 @@
         android:id="@+id/tvWatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="@id/tvTitle"
-        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        android:textColor="#777777"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:textColor="#777777"
-        />
+        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
@@ -149,8 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="toggleButton,bShare, bWatching"
-        app:layout_constraintTop_toBottomOf="@id/barrier2"
-        />
+        app:layout_constraintTop_toBottomOf="@id/barrier2" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButton"
@@ -165,8 +168,7 @@
             style="@style/LikeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/icon_like"
-            />
+            app:icon="@drawable/icon_like" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -177,8 +179,7 @@
         android:layout_height="wrap_content"
         app:icon="@drawable/icon_share"
         app:layout_constraintStart_toEndOf="@id/toggleButton"
-        app:layout_constraintTop_toBottomOf="@id/barrier2"
-        />
+        app:layout_constraintTop_toBottomOf="@id/barrier2" />
 
     <Button
         android:id="@+id/bWatching"
@@ -190,5 +191,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrier2" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

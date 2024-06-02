@@ -11,19 +11,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.EditPostFragment.Companion.longArg
 import ru.netology.nmedia.activity.EditPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.utils.longArg
 
 class FeedFragment : Fragment() {
-
-    val viewModel: PostViewModel by viewModels(
+    private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
+
     )
+
+    companion object {
+        var Bundle.textArg: String? by StringArg
+        var Bundle.longArg: Long by longArg
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +52,7 @@ class FeedFragment : Fragment() {
             override fun onShare(post: Post) {
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, post.content) 
+                    putExtra(Intent.EXTRA_TEXT, post.content)
                     type = "text/plain"
                 }
                 val shareIntent = Intent.createChooser(intent, getString(R.string.share))
@@ -60,29 +67,28 @@ class FeedFragment : Fragment() {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
                 findNavController().navigate(R.id.action_feedFragment_to_editPostFragment,
-                    Bundle().apply{
+                    Bundle().apply {
                         textArg = post.content
                     })
             }
 
-            override fun playMedia(post: Post) {
+            override fun onOpenCardPost(post: Post) {
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_cardPostFragment,
+                    Bundle().apply {
+                        longArg = post.id
+                    })
+            }
+
+            override fun onPlayMedia(post: Post) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
                 if (intent.resolveActivity(requireContext().packageManager) != null) {
                     startActivity(intent)
                 }
                 viewModel.playMedia(post.id)
-                viewModel.cancelEdit()
             }
-
-            override fun openPost(post: Post) {
-                findNavController().navigate(R.id.action_feedFragment_to_cardPostFragment,
-//                    Bundle().apply {
-//                        longArg = post.id
-//                    }
-                                )
-            }
-        })
-
+        }
+        )
         binding.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             val newPost = posts.size > adapter.currentList.size
@@ -91,17 +97,6 @@ class FeedFragment : Fragment() {
                     binding.list.smoothScrollToPosition(0)
                 }
             }
-        }
-
-        viewModel.edited.observe(viewLifecycleOwner) { post ->
-            if (post.id == 0L) {
-                return@observe
-            }
-            findNavController().navigate(
-                R.id.action_feedFragment_to_editPostFragment,
-                Bundle().apply {
-                    textArg = post.content
-                })
         }
 
         binding.createPostFab.setOnClickListener {

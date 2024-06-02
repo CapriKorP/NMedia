@@ -23,38 +23,38 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 
 class EditPostFragment : Fragment() {
-
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
     companion object {
         var Bundle.textArg: String? by StringArg
         var Bundle.longArg: Long by longArg
     }
-
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-            val binding = FragmentEditPostBinding.inflate(
-                inflater,
-                container,
-                false)
+        val binding = FragmentEditPostBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         arguments?.textArg?.let {
-            val content = it
-            binding.content.setText(content)
+            binding.content.setText(it)
         }
 
         binding.saveEditedPost.setOnClickListener {
+            viewModel.changeContent(binding.content.text.toString())
+            viewModel.save()
             findNavController().navigateUp()
         }
 
-        binding.back.setOnClickListener{
-            findNavController().navigateUp()
+        binding.back.setOnClickListener {
             viewModel.cancelEdit()
+            findNavController().navigateUp()
         }
         return binding.root
     }
