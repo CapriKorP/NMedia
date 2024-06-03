@@ -14,4 +14,5 @@
     <string name="edit_mode">Edit</string>
     <string name="text_input_title">Create new post</string>
     <string name="text_input_title_edit">Edit post</string>
+    <string name="fab_description">Create new post</string>
 </resources>
