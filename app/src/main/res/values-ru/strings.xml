@@ -15,4 +15,5 @@
     <string name="edit_mode">Редактирование</string>
     <string name="text_input_title">Новый пост</string>
     <string name="text_input_title_edit">Редактирование поста</string>
+    <string name="fab_description">Создать новый пост</string>
 </resources>

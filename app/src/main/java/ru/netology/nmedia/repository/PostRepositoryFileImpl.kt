@@ -204,4 +204,12 @@ class PostRepositoryFileImpl(
         data.value = posts
         sync()
     }
+
+    override fun openPost(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else it.copy(viewed = it.viewed + 1)
+        }
+        data.value = posts
+        sync()
+    }
 }
