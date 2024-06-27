@@ -90,14 +90,8 @@ class FeedFragment : Fragment() {
         }
         )
         binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost = posts.size > adapter.currentList.size
-            adapter.submitList(posts) {
-                if (newPost) {
-                    binding.list.smoothScrollToPosition(0)
-                }
-            }
-        }
+        val posts = viewModel.data
+        adapter.submitList(posts)
 
         binding.createPostFab.setOnClickListener {
             viewModel.cancelEdit()
