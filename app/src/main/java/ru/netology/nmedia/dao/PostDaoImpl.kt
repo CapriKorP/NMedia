@@ -1,5 +1,7 @@
 package ru.netology.nmedia.dao
 
+
+\
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import ru.netology.nmedia.dto.Post
@@ -18,7 +20,6 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_VIDEO_URL} TEXT NOT NULL
             ${PostColumns.COLUMN_VIDEO_VIEWED} INTEGER NOT NULL DEFAULT 0
-            
         );
         """.trimIndent()
     }
@@ -64,7 +65,6 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 posts.add(map(it))
             }
         }
-
         return posts
     }
 
@@ -78,6 +78,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         """.trimIndent(), arrayOf(id)
         )
     }
+
 
     override fun share(id: Long) {
         db.execSQL(
@@ -126,5 +127,3 @@ private fun map(cursor: Cursor): Post {
         )
     }
 }
-
-
