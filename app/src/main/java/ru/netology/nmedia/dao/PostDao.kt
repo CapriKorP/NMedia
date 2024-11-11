@@ -4,8 +4,10 @@ import ru.netology.nmedia.dto.Post
 
 interface PostDao {
     fun getAll(): List<Post>
-    fun save(post: Post): Post
-    fun likeById(id: Long)
-    fun removeById(id: Long)
-    fun shareById(id: Long)
+    fun like(id:Long)
+    fun share(id: Long)
+    fun removeByID(id: Long)
+    fun save(post: Post)
+    fun playMedia(id: Long)
+    fun openPost(id: Long)
 }

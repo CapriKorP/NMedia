@@ -1,6 +1,7 @@
 package ru.netology.nmedia.dao
 
-import android.content.ContentValues
+
+\
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import ru.netology.nmedia.dto.Post
@@ -12,12 +13,12 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
             ${PostColumns.COLUMN_AUTHOR} TEXT NOT NULL,
             ${PostColumns.COLUMN_CONTENT} TEXT NOT NULL,
-            ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_PUBLISHED} TEXT NOT NULL,
-            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0,
-            ${PostColumns.COLUMN_SHARED} INTEGER NOT NULL DEFAULT 0,
-            ${PostColumns.COLUMN_VIEWED} INTEGER NOT NULL DEFAULT 0,
-            ${PostColumns.COLUMN_VIDEO_URL} TEXT NOT NULL,
+            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0
+            ${PostColumns.COLUMN_SHARED} INTEGER NOT NULL DEFAULT 0
+            ${PostColumns.COLUMN_VIEWED} INTEGER NOT NULL DEFAULT 0
+            ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
+            ${PostColumns.COLUMN_VIDEO_URL} TEXT NOT NULL
             ${PostColumns.COLUMN_VIDEO_VIEWED} INTEGER NOT NULL DEFAULT 0
         );
         """.trimIndent()
@@ -28,30 +29,29 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         const val COLUMN_ID = "id"
         const val COLUMN_AUTHOR = "author"
         const val COLUMN_CONTENT = "content"
-        const val COLUMN_LIKED_BY_ME = "likedByMe"
         const val COLUMN_PUBLISHED = "published"
         const val COLUMN_LIKES = "likes"
         const val COLUMN_SHARED = "shared"
         const val COLUMN_VIEWED = "viewed"
+        const val COLUMN_LIKED_BY_ME = "likedByMe"
         const val COLUMN_VIDEO_URL = "videoURL"
         const val COLUMN_VIDEO_VIEWED = "videoViewed"
-
         val ALL_COLUMNS = arrayOf(
             COLUMN_ID,
             COLUMN_AUTHOR,
             COLUMN_CONTENT,
-            COLUMN_LIKED_BY_ME,
             COLUMN_PUBLISHED,
             COLUMN_LIKES,
             COLUMN_SHARED,
             COLUMN_VIEWED,
+            COLUMN_LIKED_BY_ME,
             COLUMN_VIDEO_URL,
             COLUMN_VIDEO_VIEWED
         )
     }
 
     override fun getAll(): List<Post> {
-        val posts= mutableListOf<Post>()
+        val posts = mutableListOf<Post>()
         db.query(
             PostColumns.TABLE,
             PostColumns.ALL_COLUMNS,
@@ -68,38 +68,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         return posts
     }
 
-    override fun save(post: Post): Post {
-        val values = ContentValues().apply {
-            put(PostColumns.COLUMN_AUTHOR, "Me")
-            put(PostColumns.COLUMN_CONTENT, post.content)
-            put(PostColumns.COLUMN_PUBLISHED, "Now")
-        }
-        val id = if (post.id != 0L) {
-            db.update(
-                PostColumns.TABLE,
-                values,
-                "${PostColumns.COLUMN_ID} = ?",
-                arrayOf(post.id.toString()),
-            )
-            post.id
-        } else {
-            db.insert(PostColumns.TABLE, null, values)
-        }
-        db.query(
-            PostColumns.TABLE,
-            PostColumns.ALL_COLUMNS,
-            "${PostColumns.COLUMN_ID} = ?",
-            arrayOf(id.toString()),
-            null,
-            null,
-            null,
-        ).use {
-            it.moveToNext()
-            return map(it)
-        }
-    }
-
-    override fun likeById(id: Long) {
+    override fun like(id: Long) {
         db.execSQL(
             """
            UPDATE posts SET
@@ -110,38 +79,51 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         )
     }
 
-    override fun removeById(id: Long) {
+
+    override fun share(id: Long) {
+        db.execSQL(
+            """
+                UPDATE posts SET
+                shared = shared + 1
+                WHERE id = ?
+            """.trimIndent(), arrayOf(id)
+        )
+    }
+
+    override fun removeByID(id: Long) {
         db.delete(
             PostColumns.TABLE,
             "${PostColumns.COLUMN_ID} = ?",
-            arrayOf(id.toString())
+        arrayOf((id.toString()))
         )
     }
 
-    override fun shareById(id: Long) {
-        db.execSQL(
-            """
-           UPDATE posts SET
-               shared = share +  1
-           WHERE id = ?;
-        """.trimIndent(), arrayOf(id)
-        )
+    override fun save(post: Post) {
+        TODO("Not yet implemented")
     }
 
-    private fun map(cursor: Cursor) : Post {
-        with(cursor) {
-            return Post(
-                id = getLong(getColumnIndexOrThrow(PostColumns.COLUMN_ID)),
-                author = getString(getColumnIndexOrThrow(PostColumns.COLUMN_AUTHOR)),
-                content = getString(getColumnIndexOrThrow(PostColumns.COLUMN_CONTENT)),
-                likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
-                published = getString(getColumnIndexOrThrow(PostColumns.COLUMN_PUBLISHED)),
-                likes = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKES)),
-                shared = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_SHARED)),
-                viewed = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIEWED)),
-                videoURL = getString(getColumnIndexOrThrow(PostColumns.COLUMN_VIDEO_URL)),
-                videoViewed = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIDEO_VIEWED))
-            )
-        }
+    override fun playMedia(id: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openPost(id: Long) {
+        TODO("Not yet implemented")
+    }
+}
+
+private fun map(cursor: Cursor): Post {
+    with(cursor) {
+        return Post(
+            id = getLong(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_ID)),
+            author = getString(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_AUTHOR)),
+            content = getString(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_CONTENT)),
+            published = getString(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_PUBLISHED)),
+            likes = getInt(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_LIKES)),
+            shared = getInt(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_SHARED)),
+            viewed = getInt(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_VIEWED)),
+            likedByMe = getInt(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_LIKED_BY_ME)) != 0,
+            videoURL = getString(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_VIDEO_URL)),
+            videoViewed = getInt(getColumnIndexOrThrow(ru.netology.nmedia.dao.PostDaoImpl.PostColumns.COLUMN_VIDEO_VIEWED)),
+        )
     }
 }
