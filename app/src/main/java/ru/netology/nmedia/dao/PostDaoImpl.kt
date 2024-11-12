@@ -1,7 +1,6 @@
 package ru.netology.nmedia.dao
 
 
-\
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import ru.netology.nmedia.dto.Post
